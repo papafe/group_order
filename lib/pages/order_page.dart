@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:group_order/model/order.dart';
 import 'package:group_order/model/realm_order_item.dart';
 import 'package:group_order/service/realm_service.dart';
+import 'package:group_order/viewmodel/order_list_view_model.dart';
 import 'package:realm/src/results.dart';
 
 class OrderPage extends ConsumerWidget {
@@ -25,23 +26,19 @@ class OrderPage extends ConsumerWidget {
         onPressed: (() {
           orderListState.addRandomItem();
         }),
-        child: const Icon(Icons.sms_outlined),
+        child: const Icon(Icons.add),
       ),
     );
   }
 }
 
-// const Divider(height: 4, color: Colors.black),
-// ItemsTotalWidget(orderListState.totalPrice)
-
-//TODO Can probably remove consumer widget
-class ItemsListView extends ConsumerWidget {
+class ItemsListView extends StatelessWidget {
   final OrderListViewModel orderListViewModel;
 
   const ItemsListView(this.orderListViewModel, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return ListView.separated(
         itemCount: orderListViewModel.items.length,
         separatorBuilder: (context, index) => const Divider(height: 2),
@@ -49,15 +46,28 @@ class ItemsListView extends ConsumerWidget {
           final item = orderListViewModel.items[index];
           return Dismissible(
             key: Key(item.id.toString()),
-            onDismissed: ((direction) {}),
-            background:
-                Container(color: const Color.fromARGB(255, 213, 32, 77)),
+            onDismissed: ((direction) {
+              orderListViewModel.removeItem(item);
+            }),
+            background: Container(color: Colors.red),
             child: ListTile(
               title: Text(item.name),
+              leading: SizedBox(
+                width: 30.0,
+                height: 30.0,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: Colors.primaries[item.color],
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                ),
+              ),
               trailing: Text(
                 item.price.toString(),
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey),
               ),
             ),
           );

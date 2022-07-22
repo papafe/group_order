@@ -8,14 +8,23 @@ part of 'realm_order_item.dart';
 
 class RealmOrderItem extends _RealmOrderItem with RealmEntity, RealmObject {
   RealmOrderItem(
+    Uuid id,
     String name,
     double price,
+    int color,
   ) {
+    RealmObject.set(this, 'id', id);
     RealmObject.set(this, 'name', name);
     RealmObject.set(this, 'price', price);
+    RealmObject.set(this, 'color', color);
   }
 
   RealmOrderItem._();
+
+  @override
+  Uuid get id => RealmObject.get<Uuid>(this, 'id') as Uuid;
+  @override
+  set id(Uuid value) => throw RealmUnsupportedSetError();
 
   @override
   String get name => RealmObject.get<String>(this, 'name') as String;
@@ -28,6 +37,11 @@ class RealmOrderItem extends _RealmOrderItem with RealmEntity, RealmObject {
   set price(double value) => RealmObject.set(this, 'price', value);
 
   @override
+  int get color => RealmObject.get<int>(this, 'color') as int;
+  @override
+  set color(int value) => RealmObject.set(this, 'color', value);
+
+  @override
   Stream<RealmObjectChanges<RealmOrderItem>> get changes =>
       RealmObject.getChanges<RealmOrderItem>(this);
 
@@ -36,8 +50,10 @@ class RealmOrderItem extends _RealmOrderItem with RealmEntity, RealmObject {
   static SchemaObject _initSchema() {
     RealmObject.registerFactory(RealmOrderItem._);
     return const SchemaObject(RealmOrderItem, 'RealmOrderItem', [
+      SchemaProperty('id', RealmPropertyType.uuid, primaryKey: true),
       SchemaProperty('name', RealmPropertyType.string),
       SchemaProperty('price', RealmPropertyType.double),
+      SchemaProperty('color', RealmPropertyType.int),
     ]);
   }
 }
