@@ -7,8 +7,6 @@ class OrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String enteredText = ""; //THIS DOES NOT WORK
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('First Route'),
@@ -17,39 +15,8 @@ class OrderPage extends StatelessWidget {
         child: ItemsListView(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text("What are you getting?"),
-                content: TextField(
-                  onChanged: (value) {
-                    enteredText = value;
-                  },
-                ),
-                actions: [
-                  Consumer(
-                    builder: (context, ref, child) {
-                      final item = OrderItem(enteredText, 10);
-                      return ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context, true);
-                            ref.read(orderProvider.notifier).addMenuItem(item);
-                          },
-                          child: const Text("Ok"));
-                    },
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context, false);
-                      },
-                      child: const Text("Cancel")),
-                ],
-              );
-            },
-          )
-        },
+        onPressed: (() {}),
+        child: const Icon(Icons.sms_outlined),
       ),
     );
   }
