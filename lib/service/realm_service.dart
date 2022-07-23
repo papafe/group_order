@@ -10,3 +10,8 @@ class RealmService {
 }
 
 var realmServiceProvider = Provider((ref) => RealmService());
+
+final menuItemsStreamProvider = StreamProvider((ref) {
+  final realm = ref.watch(realmServiceProvider).getRealm();
+  return realm.all<RealmOrderItem>().changes;
+});

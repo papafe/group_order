@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:group_order/model/order.dart';
 import 'package:group_order/model/realm_order_item.dart';
 import 'package:group_order/service/realm_service.dart';
+import 'package:group_order/viewmodel/immutable_order_list_view_model.dart';
 import 'package:group_order/viewmodel/order_list_view_model.dart';
 import 'package:realm/src/results.dart';
 
@@ -11,7 +12,7 @@ class OrderPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final orderListState = ref.watch(orderListViewModelProvider);
+    final orderListState = ref.watch(immutableOrderListViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,7 +34,7 @@ class OrderPage extends ConsumerWidget {
 }
 
 class ItemsListView extends StatelessWidget {
-  final OrderListViewModel orderListViewModel;
+  final ImmutableOrderListViewModel orderListViewModel;
 
   const ItemsListView(this.orderListViewModel, {Key? key}) : super(key: key);
 
