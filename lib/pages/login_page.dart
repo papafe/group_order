@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:group_order/pages/order_page.dart';
 
+//Not used at the moment, could be removed
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
